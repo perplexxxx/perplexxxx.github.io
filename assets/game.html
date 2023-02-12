@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      html,
+      body {
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const path = urlParams.get("path");
+      window.history.pushState({}, '', `${localStorage.getItem('instance').replace(location.origin, '')}game${path.slice(6).replace('/index.html', '')}`);
+
+      if (path) {
+        document.body.innerHTML = `<iframe frameborder="0" src="${localStorage.getItem('instance') + path.slice(1)}" onerror="document.write('Could not load game');"></iframe>`;
+      } else {
+        document.write("Could not load game");
+      }
+    </script>
+  </body>
+</html>
